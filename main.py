@@ -4,12 +4,13 @@
 # IMPORTS
 import discord
 import BOT_module
+import VG_module
 import tournament_module
 
 # Discord Variables--
 client = discord.Client()
 
-# Whenever BOT is ready
+# Whenever BOT is READY
 @client.event
 async def on_ready():
 
@@ -36,5 +37,8 @@ async def on_message(message):
     elif message.content.startswith(">sleep"):
         await BOT_module.sleepBOT(client, message)
 
+    elif message.content.startswith(">VG"):
+        await VG_module.commandVG(client, message)
 
-client.run("DISCORD_TOKEN_HERE")
+# RUNS BOT with Discord KEY
+client.run("DISCORD_BOT_TOKEN_HERE")

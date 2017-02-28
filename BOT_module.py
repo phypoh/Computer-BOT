@@ -8,8 +8,9 @@ import TOOL_module
 # Gives a LIST of possible COMMANDS
 async def helpBOT(client, message):
 
-    await client.send_message(message.channel, "List of Commands:\n>help  ~  list of commands\n>catch ~ number of "
-    "messages from you in this channel\n>sleep ~ let this BOT take a breather")
+    await client.send_message(message.channel, "**Computer Bot Commands:**\n**>help**  ~  *list of general commands*"
+    "\n**>catch** ~ *number of messages from you in this channel*\n**>sleep** ~ *let this BOT take a breather*"
+    "\n**>VG help** ~ *list of VG module commands*")
 
 # Tells AUTHOR how many MSGs he has in THIS channel
 async def catchBOT(client, message):
