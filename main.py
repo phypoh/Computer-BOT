@@ -5,7 +5,6 @@
 import discord
 import BOT_module
 import VG_module
-import tournament_module
 
 # Discord Variables--
 client = discord.Client()
@@ -41,4 +40,4 @@ async def on_message(message):
         await VG_module.commandVG(client, message)
 
 # RUNS BOT with Discord KEY
-client.run("DISCORD_BOT_TOKEN_HERE")
+client.run("")  # DISCORD_BOT_TOKEN_HERE
