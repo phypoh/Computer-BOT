@@ -7,6 +7,7 @@ import BOT_module
 import VG_module
 
 # Discord Variables--
+keyDISCORD = ""  # DISCORD_BOT_TOKEN_HERE"
 client = discord.Client()
 
 # Whenever BOT is READY
@@ -40,4 +41,4 @@ async def on_message(message):
         await VG_module.commandVG(client, message)
 
 # RUNS BOT with Discord KEY
-client.run("")  # DISCORD_BOT_TOKEN_HERE
+client.run(keyDISCORD)

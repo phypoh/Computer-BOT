@@ -171,7 +171,11 @@ def getPlayerPerformanceVG(name, days=7, type=0):
         deaths.append(stats["deaths"])
         farm.append(stats["farm"])
         goldMineCaptures.append(stats["goldMineCaptures"])
-        itemslist.append(stats["items"])
+        # itemslist.append(stats["items"])
+
+        for item in stats["items"]:
+            itemslist.append(item)
+
         karmaLevel.append(stats["karmaLevel"])
         kills.append(stats["kills"])
         krakenCaptures.append(stats["krakenCaptures"])
