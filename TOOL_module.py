@@ -25,6 +25,9 @@ def giveMeanOfList(list):
         elif value == False:
             valuelist.append(0)
 
+        elif value == "null" or value == "":
+            valuelist.append(0)
+
         else:
             return "!!!DOESN'T SUPPORT " + str(value) + "!!!"
 
@@ -43,6 +46,9 @@ def giveMeanOfList(list):
 # !!!LIST MUST BE MADE OF SAME STRINGS!!! RETURNS LIST sorting STRINGS from those who REPEAT MOST to those who REPEAT LEAST. [1(first biggest value) : XXXXX, 2(second biggest value) : XXXXX, etc..]
 def giveListInOrderTOOL(list):
     stringdictionary = {}  # DICTIONARY made of ALL POSSIBLE STRINGS
+
+    if isIntTOOL(list[0]) == True:
+        return "!!!DOESN'T SUPPORT " + str(list[0]) + "!!!"
 
     for value in list:  # ADDING STRINGS to the STRINGDICTIONARY
         if value in stringdictionary:  # To PREVENT any GLITCHES
