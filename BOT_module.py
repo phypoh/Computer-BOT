@@ -3,49 +3,47 @@
 
 # IMPORTS
 import asyncio
-import TOOL_module
+import TOOL_module as tools
 
-# Gives a LIST of possible COMMANDS
-async def helpBOT(client, message):
+# MANAGES functions in the BOT module
+async def commandBOT(bot, author, channel, part1, part2):
+    if part1 == "catch":
+        await catchMsgBOT(bot, author, channel)
 
-    await client.send_message(message.channel, "**Computer Bot Commands:**\n**>help**  ~  *list of general commands*"
-    "\n**>catch** ~ *number of messages from you in this channel*\n**>sleep** ~ *let this BOT take a breather*"
-    "\n**>VG help** ~ *list of VG module commands*")
+    elif part1 == "sleep":
+        await sleepBOT(bot, part2)
+
+    else:
+        await bot.say("**>bot" + str(part1) + str(part2) + "** *isn't a valid command!*")  # When no PARTS are MATCHED
 
 # Tells AUTHOR how many MSGs he has in THIS channel
-async def catchBOT(client, message):
-    counter = 0
-    tmp = await client.send_message(message.channel, "Calculating messages...")
-    async for log in client.logs_from(message.channel, limit=100):
-            if log.author == message.author:
-                counter += 1
-    await client.edit_message(tmp, "You have " + str(counter) + " messages!")
+async def catchMsgBOT(bot, author, channel):
+    msgs = 0
+    msg = await bot.send_message(channel, "Calculating messages...")
+    async for log in bot.logs_from(channel, limit=100):
+            if log.author == author:
+                msgs += 1
+
+    if msgs == 100:  # BOT SAYS that you have over 100 MESSAGES
+        await bot.edit_message(msg, "You have over 100 messages!")
+
+    else:  # BOT SAYS number of MESSAGES you HAVE
+        await bot.edit_message(msg, "You have " + str(msgs) + " messages!")
+
 
 # Tells BOT to sleep for NUM of SECONDS
-async def sleepBOT(client, message):
-
-    COMMAND = message.content.split()  # Split the command up [1] = '>sleep', [2] = 'AMOUNT_OF_SECONDS', [3+] = 'TRASH'
-
-    if (len(COMMAND) > 1):  # CHECK to see if we are GIVEN a specific TIME
-        NUM = COMMAND[1]  # NUM is SET to the SECOND key word of the COMMAND
-
-        if (TOOL_module.isIntTOOL(NUM) == True):
-            NUM = int(NUM)
-            NUM = abs(NUM)
-
-            if NUM > 3600:
-                NUM = 3600
-
-        else:
-            NUM = False
+async def sleepBOT(bot, seconds):
+    if tools.isIntTOOL(seconds) == False:
+        await bot.say(str(seconds) + " isn't a valid number!")
 
     else:
-        NUM = 5
+        seconds = int(seconds)
 
-    if NUM == False:
-        await client.send_message(message.channel, "Can't go to sleep to " + str(COMMAND[1]) + "!")
+        if seconds > 3600:
+            seconds = 3600
+        elif seconds <= 0:
+            seconds = 1
 
-    else:
-        await client.send_message(message.channel, "Going to sleep for " + str(NUM) + " seconds good night... :sleeping:")
-        await asyncio.sleep(NUM)
-        await client.send_message(message.channel, "Done sleeping! :raised_hands:")
+        await bot.say("Going to sleep for " + str(seconds) + " seconds good night... :sleeping:")
+        await asyncio.sleep(seconds)
+        await bot.say("Done sleeping! :raised_hands:")

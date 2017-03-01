@@ -10,12 +10,9 @@ import TOOL_module as tools
 keyVG = ""  # VG_API_TOKEN_HERE
 apiVG = gamelocker.Gamelocker(keyVG).Vainglory()  # Use #1
 
-# apiObjectVG = gamelocker.Gamelocker(keyVG)  # Use #2
-# clientVG = v.newClient()  # Use #2
-
 
 # Will get the COMMAND given and EXECUTE the according FUNCTION
-async def commandVG(client, message):
+async def commandVG(client, message, something):
     COMMAND =  message.content.split()  # SPLIT up the MESSAGE to form the COMMAND
 
     # Check the SIZE of the COMMAND to narrow down the POSSIBILITIES

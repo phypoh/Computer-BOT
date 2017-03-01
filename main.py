@@ -3,42 +3,38 @@
 
 # IMPORTS
 import discord
+from discord.ext import commands
 import BOT_module
 import VG_module
 
 # Discord Variables--
 keyDISCORD = ""  # DISCORD_BOT_TOKEN_HERE"
-client = discord.Client()
+bot = commands.Bot(command_prefix=">")
+
 
 # Whenever BOT is READY
-@client.event
+@bot.event
 async def on_ready():
+    print('Logged In As: ' + bot.user.name + "  ID:  " + bot.user.id + "\n\n")
 
-    print('Logged In As: ' + client.user.name + "  ID:  " + client.user.id + "\n\n")
+
+# Whenever a MESSAGE is SENT STARTING with COMMAND PREFIX, ">".
+@bot.command()
+async def guide():  # BOT gives a list of possible commands in CURRENT CHANNEL
+    await bot.say("```List of Commands:\n> ~ used to issue commands\n>catch\n>guide ~ a list of possible commands\n>bot help ~ a list of possible commands for bot module\n>vg help ~ a list of possible commands for VG module```")
 
 
-# Whenever a MESSAGE is SENT
-@client.event
-async def on_message(message):
+@bot.command(pass_context=True)
+async def computer(msg, part1="", part2=""):
+    author = msg.message.author
+    channel = msg.message.channel
 
-    # Make sure the AUTHOR of the MSG isn't BOT
-    if message.author == client.user:
-        return
+    await BOT_module.commandBOT(bot, author, channel, part1, part2)
 
-    # Gives a LIST of possible COMMANDS
-    if message.content.startswith('>help'):
-        await BOT_module.helpBOT(client, message)
 
-    # Tells AUTHOR how many MSGs he has in THIS channel
-    if message.content.startswith('>catch'):
-        await BOT_module.catchBOT(client, message)
-
-    # Tells BOT to sleep for NUM of SECONDS
-    elif message.content.startswith(">sleep"):
-        await BOT_module.sleepBOT(client, message)
-
-    elif message.content.startswith(">VG"):
-        await VG_module.commandVG(client, message)
+@bot.command()
+async def vg(part1="", part2=""):
+    await VG_module.commandVG(bot, part1, part2)
 
 # RUNS BOT with Discord KEY
-client.run(keyDISCORD)
+bot.run(keyDISCORD)
